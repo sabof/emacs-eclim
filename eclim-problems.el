@@ -401,15 +401,6 @@ is convenient as it lets the user navigate between errors using
       (compilation-mode))
     (display-buffer compil-buffer 'other-window)))
 
-(defun eclim--insert-problem-compilation (problem filecol-size project-directory)
-  (let ((filename (first (split-string (assoc-default 'filename problem) project-directory t)))
-        (position (split-string (eclim--problem-pos problem) " col " t))
-        (description (assoc-default 'message problem))
-        (type (eclim--problem-type problem)))
-    (let ((line (first position))
-          (col (second position)))
-      (insert (format "%s:%s:%s: %s: %s\n" filename line col (upcase type) description)))))
-
 (add-hook 'after-save-hook #'eclim--problems-update-maybe)
 
 (provide 'eclim-problems)
